@@ -4,8 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Relay — Automation that hands off cleanly</title>
+  <meta name="description" content="Relay connects the tools your team uses and moves work between them automatically with clear audit trails. Trusted by operations teams handling 40M+ handoffs a month.">
+  <meta property="og:title" content="Relay — Automation that hands off cleanly">
+  <meta property="og:description" content="Workflow automation for teams that can't afford to lose track of work between systems.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Relay — Automation that hands off cleanly">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Relay",
+    "description": "Workflow automation platform for clean handoffs",
+    "url": "https://relay.app",
+    "logo": "https://relay.app/logo.svg",
+    "sameAs": ["https://twitter.com/relayapp", "https://linkedin.com/company/relay"]
+  }
+  </script>
+
   <style>
     :root {
       --ink: #0F1729;
@@ -100,8 +120,40 @@
 
     .nav-links a:hover { color: var(--ink); }
 
+    .nav-links a:focus-visible { outline: 2px solid var(--indigo); outline-offset: 4px; }
+
     @media (max-width: 800px) {
       .nav-links { display: none; }
+      .menu-toggle { display: flex; }
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .menu-toggle span {
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(10px, 10px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
     }
 
     .btn {
@@ -123,6 +175,7 @@
       color: var(--white);
     }
     .btn-primary:hover { background: var(--indigo); }
+    .btn-primary:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
 
     .btn-ghost {
       background: transparent;
@@ -130,6 +183,7 @@
       border-color: var(--line);
     }
     .btn-ghost:hover { border-color: var(--ink); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
 
     .nav-cta { display: flex; gap: 12px; align-items: center; }
 
@@ -171,6 +225,7 @@
       color: var(--slate-soft);
       max-width: 560px;
       margin-bottom: 36px;
+      line-height: 1.6;
     }
 
     .hero-ctas {
@@ -178,6 +233,7 @@
       gap: 14px;
       align-items: center;
       margin-bottom: 12px;
+      flex-wrap: wrap;
     }
 
     .hero-ctas .btn { padding: 13px 26px; font-size: 15px; }
@@ -368,6 +424,7 @@
     .section-head p {
       font-size: 16.5px;
       color: var(--slate-soft);
+      line-height: 1.6;
     }
 
     /* ---------- Features ---------- */
@@ -587,6 +644,7 @@
       font-size: 13.5px;
       color: #8993B5;
       max-width: 260px;
+      line-height: 1.6;
     }
 
     .footer-cols {
@@ -613,6 +671,7 @@
       transition: color 0.2s ease;
     }
     .footer-col a:hover { color: var(--white); }
+    .footer-col a:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
 
     .footer-bottom {
       padding-top: 24px;
@@ -622,6 +681,62 @@
       color: #6B7599;
       flex-wrap: wrap;
       gap: 12px;
+    }
+
+    /* Modal/Dialog styles */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 41, 0.5);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.open {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 48px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .modal-close {
+      float: right;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--slate-soft);
+      padding: 0;
+      width: 32px;
+      height: 32px;
+    }
+
+    .modal-close:hover { color: var(--ink); }
+
+    .modal h2 {
+      margin-top: 24px;
+      margin-bottom: 16px;
+    }
+
+    .modal p {
+      color: var(--slate-soft);
+      margin-bottom: 28px;
+      line-height: 1.6;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -636,25 +751,30 @@
 </head>
 <body>
 
-<nav>
+<nav role="navigation" aria-label="Main navigation">
   <div class="wrap">
-    <div class="logo">
-      <svg class="logo-mark" viewBox="0 0 28 28" fill="none" aria-label="Relay logo">
+    <a href="#" class="logo" aria-label="Relay home">
+      <svg class="logo-mark" viewBox="0 0 28 28" fill="none">
         <circle cx="6" cy="14" r="4" fill="#4C5FD5"/>
         <circle cx="22" cy="14" r="4" fill="#0F1729"/>
         <path d="M10 14H18" stroke="#E8A33D" stroke-width="2" stroke-linecap="round"/>
       </svg>
       Relay
-    </div>
-    <div class="nav-links">
+    </a>
+    <div class="nav-links" id="navLinks">
       <a href="#how">How it works</a>
       <a href="#features">Features</a>
       <a href="#trust">Security</a>
       <a href="#pricing">Pricing</a>
     </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <div class="nav-cta">
-      <a href="#" class="btn btn-ghost">Sign in</a>
-      <a href="#" class="btn btn-primary">Book a demo</a>
+      <button class="btn btn-ghost" id="signInBtn">Sign in</button>
+      <button class="btn btn-primary" id="demoBtn">Book a demo</button>
     </div>
   </div>
 </nav>
@@ -663,10 +783,10 @@
   <div class="wrap">
     <div class="eyebrow">● Now handling 40M+ handoffs a month</div>
     <h1>Every task, handed off <em>without dropping it.</em></h1>
-    <p class="hero-sub">Relay connects the tools your team already uses and moves work between them automatically — with a clear record of what happened at every step, for teams that can't afford to drop the ball.</p>
+    <p class="hero-sub">Relay connects the tools your team already uses and moves work between them automatically — with a clear record of what happened at every step, for teams that can't afford to lose track of important work.</p>
     <div class="hero-ctas">
-      <a href="#" class="btn btn-primary">Book a demo</a>
-      <a href="#" class="btn btn-ghost">See how it works ↓</a>
+      <button class="btn btn-primary" id="demoBtn2">Book a demo</button>
+      <a href="#how" class="btn btn-ghost">See how it works ↓</a>
     </div>
     <p class="hero-note">No credit card required · Set up your first automation in under 10 minutes</p>
 
@@ -704,12 +824,12 @@
 <div class="logos">
   <div class="wrap">
     <p class="logos-label">Trusted by operations teams at</p>
-    <div class="logos-row">
-      <span>Northwind</span>
-      <span>Ferro & Vale</span>
-      <span>Cascade Health</span>
-      <span>Lumen Logistics</span>
-      <span>Bramwell</span>
+    <div class="logos-row" role="list">
+      <span role="listitem">Northwind</span>
+      <span role="listitem">Ferro & Vale</span>
+      <span role="listitem">Cascade Health</span>
+      <span role="listitem">Lumen Logistics</span>
+      <span role="listitem">Bramwell</span>
     </div>
   </div>
 </div>
@@ -721,10 +841,10 @@
       <h2>Built for handoffs that can't fail</h2>
       <p>Most automation tools optimize for speed. Relay optimizes for the moment work changes hands — because that's where things usually go wrong.</p>
     </div>
-    <div class="feature-grid">
-      <div class="feature-card">
+    <div class="feature-grid" role="list">
+      <div class="feature-card" role="listitem">
         <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-label="Checkmark icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <rect x="3" y="3" width="14" height="14" rx="2" stroke="#4C5FD5" stroke-width="1.6"/>
             <path d="M7 10L9 12L13 8" stroke="#4C5FD5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -732,27 +852,27 @@
         <h3>Full audit trail</h3>
         <p>Every handoff is timestamped and logged — who touched it, when, and what changed — so nothing gets lost between systems.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card" role="listitem">
         <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-label="Plus icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M10 3V17M3 10H17" stroke="#4C5FD5" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
         </div>
         <h3>No-code builder</h3>
         <p>Set up a workflow by describing the steps in plain language, or drag and drop from over 200 connectors.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card" role="listitem">
         <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-label="Star icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M10 2L12.5 7.5L18 10L12.5 12.5L10 18L7.5 12.5L2 10L7.5 7.5L10 2Z" stroke="#4C5FD5" stroke-width="1.6" stroke-linejoin="round"/>
           </svg>
         </div>
         <h3>Exception handling</h3>
         <p>When something doesn't match the pattern, Relay pauses and routes it to a person instead of guessing.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card" role="listitem">
         <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-label="Clock icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <circle cx="10" cy="10" r="7" stroke="#4C5FD5" stroke-width="1.6"/>
             <path d="M10 6V10L12.5 12" stroke="#4C5FD5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -760,9 +880,9 @@
         <h3>Real-time status</h3>
         <p>See exactly where any task sits in its workflow right now, instead of asking around to find out.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card" role="listitem">
         <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-label="History icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <rect x="3" y="6" width="14" height="10" rx="2" stroke="#4C5FD5" stroke-width="1.6"/>
             <path d="M7 6V4.5C7 3.67 7.67 3 8.5 3H11.5C12.33 3 13 3.67 13 4.5V6" stroke="#4C5FD5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -770,9 +890,9 @@
         <h3>Version history</h3>
         <p>Roll back any workflow to a previous version in one click if a change doesn't behave the way you expected.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card" role="listitem">
         <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-label="Shield icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path d="M10 3L4 6V10C4 13.5 6.5 16.5 10 17.5C13.5 16.5 16 13.5 16 10V6L10 3Z" stroke="#4C5FD5" stroke-width="1.6" stroke-linejoin="round"/>
           </svg>
         </div>
@@ -790,20 +910,20 @@
       <h2>Held to the standard your IT team already has</h2>
       <p>Relay runs in the background of businesses that can't tolerate downtime or a data leak — so it's built to match.</p>
     </div>
-    <div class="trust-grid">
-      <div class="trust-item">
+    <div class="trust-grid" role="list">
+      <div class="trust-item" role="listitem">
         <span class="num mono">99.98%</span>
         <span class="desc">Uptime over the past 12 months</span>
       </div>
-      <div class="trust-item">
+      <div class="trust-item" role="listitem">
         <span class="num mono">SOC 2</span>
         <span class="desc">Type II certified, audited annually</span>
       </div>
-      <div class="trust-item">
+      <div class="trust-item" role="listitem">
         <span class="num mono">AES-256</span>
         <span class="desc">Encryption at rest and in transit</span>
       </div>
-      <div class="trust-item">
+      <div class="trust-item" role="listitem">
         <span class="num mono">24/7</span>
         <span class="desc">Support with a 15-minute response SLA</span>
       </div>
@@ -814,7 +934,7 @@
 <section class="testimonial">
   <div class="wrap">
     <div class="testimonial-card">
-      <p class="quote">"We used to lose a day every week just chasing invoices between inboxes. Relay gave us a system that hands off cleanly every time — and we can finally see where things actually are."</p>
+      <p class="quote">"We used to lose a day every week just chasing invoices between inboxes. Relay gave us a system that hands off cleanly every time — and we can finally see where things actually are. It's transformed how our operations team works."</p>
       <div class="testimonial-person">
         <div class="testimonial-avatar">MK</div>
         <div>
@@ -831,8 +951,8 @@
     <h2>Give your workflows a clean handoff</h2>
     <p>Start free. Add your first automation today — no engineering time required.</p>
     <div class="cta-ctas">
-      <a href="#" class="btn btn-primary">Book a demo</a>
-      <a href="#" class="btn btn-ghost">Talk to sales</a>
+      <button class="btn btn-primary" id="demoBtn3">Book a demo</button>
+      <button class="btn btn-ghost" id="salesBtn">Talk to sales</button>
     </div>
   </div>
 </section>
@@ -854,24 +974,152 @@
         </div>
         <div class="footer-col">
           <h4>Company</h4>
-          <a href="#">About</a>
-          <a href="#">Careers</a>
-          <a href="#">Contact</a>
+          <a href="/about">About</a>
+          <a href="/careers">Careers</a>
+          <a href="/contact">Contact</a>
         </div>
         <div class="footer-col">
           <h4>Resources</h4>
-          <a href="#">Documentation</a>
-          <a href="#">Status</a>
-          <a href="#">Changelog</a>
+          <a href="/docs">Documentation</a>
+          <a href="/status">Status</a>
+          <a href="/changelog">Changelog</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 Lami Technologies, Inc.</span>
-      <span>Privacy · Terms</span>
+      <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
     </div>
   </div>
 </footer>
+
+<!-- Demo Modal -->
+<div class="modal" id="demoModal" role="dialog" aria-labelledby="demoModalTitle">
+  <div class="modal-content">
+    <button class="modal-close" id="demoModalClose" aria-label="Close dialog">&times;</button>
+    <h2 id="demoModalTitle">Book a demo</h2>
+    <p>Our team will walk you through how Relay handles your specific workflows.</p>
+    <form id="demoForm">
+      <input type="text" placeholder="Your name" required aria-label="Name" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:6px;margin-bottom:12px;font-size:14px;">
+      <input type="email" placeholder="your@company.com" required aria-label="Email" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:6px;margin-bottom:12px;font-size:14px;">
+      <input type="tel" placeholder="Phone number" aria-label="Phone" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:6px;margin-bottom:16px;font-size:14px;">
+      <button type="submit" class="btn btn-primary" style="width:100%;">Request demo</button>
+    </form>
+  </div>
+</div>
+
+<!-- Sign In Modal -->
+<div class="modal" id="signInModal" role="dialog" aria-labelledby="signInModalTitle">
+  <div class="modal-content">
+    <button class="modal-close" id="signInModalClose" aria-label="Close dialog">&times;</button>
+    <h2 id="signInModalTitle">Sign in to Relay</h2>
+    <p>Access your workflows and automations.</p>
+    <form id="signInForm">
+      <input type="email" placeholder="Email" required aria-label="Email" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:6px;margin-bottom:12px;font-size:14px;">
+      <input type="password" placeholder="Password" required aria-label="Password" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:6px;margin-bottom:16px;font-size:14px;">
+      <button type="submit" class="btn btn-primary" style="width:100%;">Sign in</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  menuToggle?.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  // Close mobile menu when link clicked
+  navLinks?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      navLinks.style.display = 'none';
+    });
+  });
+
+  // Modal management
+  const demoModal = document.getElementById('demoModal');
+  const signInModal = document.getElementById('signInModal');
+  const demoButtons = document.querySelectorAll('[id^="demoBtn"]');
+  const signInBtn = document.getElementById('signInBtn');
+  const demoModalClose = document.getElementById('demoModalClose');
+  const signInModalClose = document.getElementById('signInModalClose');
+  const salesBtn = document.getElementById('salesBtn');
+
+  demoButtons.forEach(btn => {
+    btn?.addEventListener('click', () => {
+      demoModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  signInBtn?.addEventListener('click', () => {
+    signInModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  const closeDemo = () => {
+    demoModal.classList.remove('open');
+    document.body.style.overflow = 'auto';
+  };
+
+  const closeSignIn = () => {
+    signInModal.classList.remove('open');
+    document.body.style.overflow = 'auto';
+  };
+
+  demoModalClose?.addEventListener('click', closeDemo);
+  signInModalClose?.addEventListener('click', closeSignIn);
+
+  // Close modal on outside click
+  demoModal?.addEventListener('click', (e) => {
+    if (e.target === demoModal) closeDemo();
+  });
+
+  signInModal?.addEventListener('click', (e) => {
+    if (e.target === signInModal) closeSignIn();
+  });
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeDemo();
+      closeSignIn();
+    }
+  });
+
+  // Form submissions
+  document.getElementById('demoForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Thank you! We'll be in touch soon.');
+    closeDemo();
+  });
+
+  document.getElementById('signInForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Sign in functionality would redirect to your auth system.');
+    closeSignIn();
+  });
+
+  // Sales button
+  salesBtn?.addEventListener('click', () => {
+    window.location.href = 'mailto:sales@relay.app';
+  });
+
+  // Smooth scroll for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href !== '#' && document.querySelector(href)) {
+        e.preventDefault();
+        document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
